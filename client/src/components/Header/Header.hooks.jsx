@@ -1,16 +1,13 @@
-
-export const getUserLocation = () => {
+export const getTemporaryUserLocation = () => {
     return new Promise((resolve, reject) => {
-        const success = (position) => {
+        const handleSuccess = (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             resolve([latitude, longitude]);
-        };
-
-        const error = (err) => {
+        }
+        const handleError = (err) => {
             reject(err);
-        };
-
-        navigator.geolocation.watchPosition(success, error);
+        }
+        navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
     });
 };

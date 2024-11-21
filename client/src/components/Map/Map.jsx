@@ -11,10 +11,8 @@ import { useEffect, useState } from 'react';
 import { getUserLocation } from './Map.hooks';
 import RoutingMachine from './RoutingMachine';
 
-const Map = ({ position }) => {
-
+const Map = ({ selectedSearchOption }) => {
     const [userLocation, setUserLocation] = useState(null);
-    const [error, setError] = useState(null);
     const [navigateButtonClicked, setNavigateButtonClicked] = useState(false);
 
     const handleNavigate = () => {
@@ -27,10 +25,15 @@ const Map = ({ position }) => {
                 setUserLocation(coords);
             })
             .catch((err) => {
-                setError(err);
+                alert('Cannot get user location', err);
             });
-    }, [navigateButtonClicked]);
+    });
 
+    const position = [selectedSearchOption?.geometry?.coordinates[1], selectedSearchOption?.geometry?.coordinates[0]];
+
+    if (!selectedSearchOption) {
+        return <div>Choose destination first to render map</div>
+    }
     return(
         <MapContainer 
             center={position} 
@@ -46,7 +49,7 @@ const Map = ({ position }) => {
             />
             <Marker position={position}>
                 <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
+                    {selectedSearchOption?.properties?.country}, {selectedSearchOption?.properties?.name}
                     <button onClick = {handleNavigate}>navigate</button>
                 </Popup>
             </Marker>
