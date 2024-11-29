@@ -13,6 +13,8 @@ import ClickHandler from './ClickHandler';
 import { useUserLocation } from './Map.hooks';
 import RoutingMachine from './RoutingMachine';
 
+import '../../styles/PopupStyles.css';
+
 const Map = ({ selectedSearchOption }) => {
     if (!selectedSearchOption) {
         return <div>Choose destination first to render map</div>
@@ -55,9 +57,9 @@ const Map = ({ selectedSearchOption }) => {
             <Marker position={position}>
                 <Popup>
                     {droppedPin ? (
-                        `droppedPin lat: ${position[0]}, lng: ${position[1]}`
+                        <p>droppedPin lat: {position[0]}, lng: {position[1]}</p>
                     ): (
-                        `${selectedSearchOption?.properties?.country}, ${selectedSearchOption?.properties?.name}`
+                        <p>{selectedSearchOption?.properties?.country}, {selectedSearchOption?.properties?.name}</p>
                     )}
                     <ShowTimeZone lat = {position[0]} lng = {position[1]} />
                     <button onClick = {handleNavigate}>navigate</button>

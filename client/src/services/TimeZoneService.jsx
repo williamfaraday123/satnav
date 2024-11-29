@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = `http://api.timezonedb.com/v2.1/get-time-zone`;
-const API_KEY = `21CC5YL8PX0L`;
+const API_KEY = import.meta.env.VITE_TIMEZONEDB_API_KEY;
 
 export const getTimeZone = async (lat, lng) => {
     try {

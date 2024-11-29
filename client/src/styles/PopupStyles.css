@@ -1,0 +1,4 @@
+.leaflet-popup-content {
+    max-height: 150px;
+    overflow-y: auto; /* enable vertical scrolling */
+}
