@@ -16,7 +16,7 @@ const ShowTimeZone = ({ lat, lng }) => {
                 const data = await getTimeZone(lat, lng);
                 setTimeZoneData(data);
             } catch (error) {
-                alert('Error fetching time zone data');
+                alert(`Error fetching time zone data, ${error}`);
             }
         }
 
