@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fleetbase/leaflet-routing-machine": "^3.2.16",
     "axios": "^1.7.8",
     "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.46",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",

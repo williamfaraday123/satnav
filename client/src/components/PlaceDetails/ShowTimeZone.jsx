@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getTimeZone } from "../../services/TimeZoneService";
+import { getTimeZoneData } from "../../services/TimeZoneService";
 
 const ShowTimeZone = ({ lat, lng }) => {
     const [showTimeZone, setShowTimeZone] = useState(false);
@@ -11,14 +11,19 @@ const ShowTimeZone = ({ lat, lng }) => {
     }, [lat, lng]);
 
     useEffect(() => {
-        const fetchTimeZoneData = async () => {
+        /* const fetchTimeZoneData = async () => {
             try {
                 const data = await getTimeZone(lat, lng);
                 setTimeZoneData(data);
             } catch (error) {
                 alert(`Error fetching time zone data, ${error}`);
             }
-        }
+        } */
+
+        const fetchTimeZoneData = () => {
+            const data = getTimeZoneData(lng);
+            setTimeZoneData(data);
+        };
 
         if (showTimeZone)
             fetchTimeZoneData();
@@ -27,17 +32,17 @@ const ShowTimeZone = ({ lat, lng }) => {
         <>
             <button onClick = {() => {
                 setShowTimeZone((prevState) => !prevState);
-            }}>getTimeZone</button>
+            }}>{showTimeZone ? "Hide timezone" : "Show timezone"}</button>
             {showTimeZone && (
                 <>
                     <h3>Current Time</h3>
-                    <p>{timeZoneData?.formatted} {timeZoneData?.abbreviation}</p>
-                    <p>Time Zone: {timeZoneData?.zoneName}</p>
-                    <p>GMT Offset: UTC/GMT +{timeZoneData?.gmtOffset/3600.00} hours</p>
-                    <p>DST: {timeZoneData?.dst == "0" ? "No" : "Yes"}</p>
-                    <p>Country: {timeZoneData?.countryName}</p>
+                    <p>{timeZoneData?.formattedTime} {timeZoneData?.abbreviation}</p>
+                    {/* <p>Time Zone: {timeZoneData?.zoneName}</p> */}
+                    <p>GMT Offset: UTC/GMT +{timeZoneData?.gmtOffset} hours</p>
+                    <p>DST: {timeZoneData?.isDST}</p>
+                    {/* <p>Country: {timeZoneData?.countryName}</p>
                     <p>City: {timeZoneData?.cityName}</p>
-                    <p>Region: {timeZoneData?.regionName}</p>
+                    <p>Region: {timeZoneData?.regionName}</p> */}
                 </>
             )}
         </>
