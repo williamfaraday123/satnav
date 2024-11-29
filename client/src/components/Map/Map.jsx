@@ -8,32 +8,33 @@ import {
 
 import { useEffect, useState } from 'react';
 
-import { getUserLocation } from './Map.hooks';
+import ShowTimeZone from '../PlaceDetails/ShowTimeZone';
+import ClickHandler from './ClickHandler';
+import { useUserLocation } from './Map.hooks';
 import RoutingMachine from './RoutingMachine';
 
 const Map = ({ selectedSearchOption }) => {
-    const [userLocation, setUserLocation] = useState(null);
+    if (!selectedSearchOption) {
+        return <div>Choose destination first to render map</div>
+    }
+
+    const userLocation = useUserLocation();
     const [navigateButtonClicked, setNavigateButtonClicked] = useState(false);
+    const [position, setPosition] = useState([selectedSearchOption?.geometry?.coordinates[1], selectedSearchOption?.geometry?.coordinates[0]]);
+    const [droppedPin, setDroppedPin] = useState(false);
 
     const handleNavigate = () => {
         setNavigateButtonClicked((prevState) => !prevState);
     };
 
     useEffect(() => {
-        getUserLocation()
-            .then((coords) => {
-                setUserLocation(coords);
-            })
-            .catch((err) => {
-                alert('Cannot get user location', err);
-            });
-    });
+        if (selectedSearchOption) {
+            setDroppedPin(false);
+            const newPosition = [selectedSearchOption?.geometry?.coordinates[1], selectedSearchOption?.geometry?.coordinates[0]];
+            setPosition(newPosition);
+        }
+    }, [selectedSearchOption]);
 
-    const position = [selectedSearchOption?.geometry?.coordinates[1], selectedSearchOption?.geometry?.coordinates[0]];
-
-    if (!selectedSearchOption) {
-        return <div>Choose destination first to render map</div>
-    }
     return(
         <MapContainer 
             center={position} 
@@ -44,12 +45,21 @@ const Map = ({ selectedSearchOption }) => {
             }}
         >
             <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <ClickHandler 
+                setPosition = {setPosition} 
+                setDroppedPin = {setDroppedPin}
             />
             <Marker position={position}>
                 <Popup>
-                    {selectedSearchOption?.properties?.country}, {selectedSearchOption?.properties?.name}
+                    {droppedPin ? (
+                        `droppedPin lat: ${position[0]}, lng: ${position[1]}`
+                    ): (
+                        `${selectedSearchOption?.properties?.country}, ${selectedSearchOption?.properties?.name}`
+                    )}
+                    <ShowTimeZone lat = {position[0]} lng = {position[1]} />
                     <button onClick = {handleNavigate}>navigate</button>
                 </Popup>
             </Marker>

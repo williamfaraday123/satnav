@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 
 export const getUserLocation = () => {
     return new Promise((resolve, reject) => {
@@ -14,3 +15,19 @@ export const getUserLocation = () => {
         navigator.geolocation.watchPosition(success, error);
     });
 };
+
+export const useUserLocation = () => {
+    const [userLocation, setUserLocation] = useState(null);
+
+    useEffect(() => {
+        getUserLocation()
+            .then((coords) => {
+                setUserLocation(coords);
+            })
+            .catch((err) => {
+                alert('Cannot get user location', err);
+            });
+    }, []);
+
+    return userLocation;
+}
