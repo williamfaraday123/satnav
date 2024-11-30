@@ -12,9 +12,10 @@ const RoutingMachine = ({ start, end, profile }) => {
         }
 
         console.log(profile);
-        const serviceUrl = `http://router.project-osrm.org/route/v1/${profile}`;
+        const serviceUrl = `https://router.project-osrm.org/route/v1`;
         const router = L.Routing.osrmv1({
             serviceUrl,
+            profile
         });
         const routingControl = L.Routing.control({
             waypoints: [L.latLng(start[0], start[1]), L.latLng(end[0], end[1])],

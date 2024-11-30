@@ -1,5 +1,5 @@
 const RoutingOptions = ({ setProfile }) => {
-    const profiles = ["driving", "walking", "cycling"];
+    const profiles = ["car", "bike", "foot"];
     return(
         <>
             {profiles.map((profile, index) => (

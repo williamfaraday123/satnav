@@ -33,7 +33,7 @@ const ShowTimeZone = ({ lat, lng }) => {
                     <h3>Current Time</h3>
                     <p>{timeZoneData?.formattedTime} {timeZoneData?.abbreviation}</p>
                     <p>Time Zone: {timeZoneData?.zoneName}</p>
-                    <p>GMT Offset: UTC/GMT +{timeZoneData?.gmtOffset} hours</p>
+                    <p>GMT Offset: UTC/GMT {timeZoneData?.gmtOffset} hours</p>
                     <p>DST: {timeZoneData?.isDST}</p>
                     {/* <p>Country: {timeZoneData?.countryName}</p>
                     <p>City: {timeZoneData?.cityName}</p>
