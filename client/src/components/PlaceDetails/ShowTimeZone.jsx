@@ -11,19 +11,14 @@ const ShowTimeZone = ({ lat, lng }) => {
     }, [lat, lng]);
 
     useEffect(() => {
-        /* const fetchTimeZoneData = async () => {
+        const fetchTimeZoneData = async () => {
             try {
-                const data = await getTimeZone(lat, lng);
+                const data = await getTimeZoneData(lat, lng);
                 setTimeZoneData(data);
             } catch (error) {
                 alert(`Error fetching time zone data, ${error}`);
             }
-        } */
-
-        const fetchTimeZoneData = () => {
-            const data = getTimeZoneData(lng);
-            setTimeZoneData(data);
-        };
+        }
 
         if (showTimeZone)
             fetchTimeZoneData();
@@ -37,7 +32,7 @@ const ShowTimeZone = ({ lat, lng }) => {
                 <>
                     <h3>Current Time</h3>
                     <p>{timeZoneData?.formattedTime} {timeZoneData?.abbreviation}</p>
-                    {/* <p>Time Zone: {timeZoneData?.zoneName}</p> */}
+                    <p>Time Zone: {timeZoneData?.zoneName}</p>
                     <p>GMT Offset: UTC/GMT +{timeZoneData?.gmtOffset} hours</p>
                     <p>DST: {timeZoneData?.isDST}</p>
                     {/* <p>Country: {timeZoneData?.countryName}</p>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getSearchOptions } from "../../services/SearchBarService";
+import RoutingOptions from "./RoutingOptions";
 import { getTemporaryUserLocation } from "./Header.hooks";
 import SearchBar from "./SearchBar";
 import SearchOptionsList from "./SearchOptionsList";
 
-const Header = ({ selectedSearchOption, setSelectedSearchOption }) => {
+const Header = ({ selectedSearchOption, setSelectedSearchOption, setProfile }) => {
     const [inputValue, setInputValue] = useState("");
     const [searchOptions, setSearchOptions] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
@@ -53,6 +54,7 @@ const Header = ({ selectedSearchOption, setSelectedSearchOption }) => {
                     <div>To: {selectedSearchOption?.properties?.country}, {selectedSearchOption?.properties?.name}</div>
                 </div>
             )}
+            <RoutingOptions setProfile={setProfile} />
         </div>
     );
 };

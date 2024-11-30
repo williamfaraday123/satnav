@@ -15,7 +15,7 @@ import RoutingMachine from './RoutingMachine';
 
 import '../../styles/PopupStyles.css';
 
-const Map = ({ selectedSearchOption }) => {
+const Map = ({ selectedSearchOption, profile }) => {
     if (!selectedSearchOption) {
         return <div>Choose destination first to render map</div>
     }
@@ -66,10 +66,13 @@ const Map = ({ selectedSearchOption }) => {
                 </Popup>
             </Marker>
             {userLocation && navigateButtonClicked && (
-                <RoutingMachine 
-                    start = {userLocation} 
-                    end = {position}
-                />
+                <>
+                    {profile && <RoutingMachine 
+                        start = {userLocation} 
+                        end = {position}
+                        profile = {profile}
+                    />}
+                </>
             )}
         </MapContainer>
     );

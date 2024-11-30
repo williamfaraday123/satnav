@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment-timezone';
 
 /*
 const API_URL = `http://api.timezonedb.com/v2.1/get-time-zone`;
@@ -49,7 +50,7 @@ export const getTimeZone = async (lat, lng) => {
     }
 }; */
 
-const calculateTimeZoneOffset = (lng) => {
+/* const calculateTimeZoneOffset = (lng) => {
     const offset = lng / 15; //longitude / 15 = offset in hours
     return Math.round(offset * 100) / 100; //round to 2 decimal places
 };
@@ -66,4 +67,31 @@ export const getTimeZoneData = (lng) => {
         gmtOffset: offset,
         isDST: isDST
     };
-}
+} */
+
+import tzlookup from 'tz-lookup';
+
+export const getTimeZoneData = async (lat, lng) => {
+    try {
+        const timezone = tzlookup(lat, lng);
+        if (!timezone) {
+            throw new Error('Timezone lookup failed');
+        }
+        const currentTime = moment().tz(timezone);
+        const formattedTime = currentTime.format('YYYY-MM-DD HH:mm:ss');
+        const abbreviation = currentTime.format('z');
+        const offset = currentTime.format('Z');
+        const isDST = currentTime.isDST() ? 'Yes' : 'No';
+        return {
+            formattedTime: formattedTime,
+            abbreviation: abbreviation,
+            zoneName: timezone,
+            gmtOffset: offset,
+            isDST: isDST
+        };
+    } catch (error) {
+        console.error(`Error in getTimeZoneData function: ${error.message}`);
+        throw new Error('Failed to get time zone data');
+    }
+};
+    

@@ -4,15 +4,18 @@ import Map from "../../components/Map/Map";
 
 const Main = () => {
     const [selectedSearchOption, setSelectedSearchOption] = useState(null);
-    const position = [51.505, -0.09]
+    const [profile, setProfile] = useState("driving");
+
     return(
         <div>
             <Header 
                 selectedSearchOption={selectedSearchOption}
                 setSelectedSearchOption={setSelectedSearchOption}
+                setProfile={setProfile}
             />
             <Map 
                 selectedSearchOption = {selectedSearchOption}
+                profile={profile}
             />
         </div>
     );
